@@ -124,10 +124,10 @@
                 error.style.display = "block"
             }
             else if(urlInput.value.length > 0){
-                
+                window.location = "http://127.0.0.1:8000/result/" + urlInput.value
             }
             else{
-
+                window.location = "http://127.0.0.1:8000/result/" + uploadInput.value
             }
         }
     </script>
