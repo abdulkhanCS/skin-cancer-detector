@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Mate+SC&family=Raleway:wght@100&display=swap" rel="stylesheet">
+    <style>
+        #header-container{
+            width: 100%;
+            height: 15%;
+            background-color: #4a536b;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+    }
+        #header-text{
+            color: white;
+            font-size: 4.5rem;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        #body-container{
+            width: 100%;
+            height: 85%;
+            background-color: whitesmoke;
+            position: absolute;
+            top: 15%;
+            left: 0%;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-items: center;
+    }
+        #url-input{
+            width: 40%;
+            height: 7%;
+            border-radius: 2%;
+            border: none;
+            outline-color: #aed6dc;
+            outline-offset: 2px;
+            font-size: 2rem;
+            font-family: 'Raleway', sans-serif;
+            position: relative;
+            top: 10%;
+        }
+        #url-input-label{
+            color: #4a536b;
+            font-size: 2.5rem;
+            font-family: 'Raleway', sans-serif;
+            position: relative;
+            top: 10%;
+        }
+        #upload-container{
+            position: relative;
+            top: 20%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 40%;
+            width: 100%;
+        }
+        #upload-image-text{
+            position: relative;
+            top: 20%;
+            font-size: 2.5rem;
+        }
+        #submit-button{
+            font-size: 1.5rem;
+            position: relative;
+            top: 40%;
+            color:whitesmoke;
+            background-color: #4a536b;
+            width: 35%;
+            height: 20%;
+            outline: none;
+            border: none;
+            border-radius: 2%;
+        }
+        #submit-button:hover{
+            cursor: pointer;
+            background-color: #aed6dc;
+            color: #4a536b;
+        }
+        #error-text{
+            position: relative;
+            top: 40%;
+            font-size: 1.5rem;
+            display: none;
+        }
+        h1{
+            font-family: 'Raleway', sans-serif;
+            color: #4a536b;
+        }
+        input{
+            font-family: 'Raleway', sans-serif;
+            color: #4a536b;
+        }
+        label{
+            font-family: 'Raleway', sans-serif;
+            color: #4a536b;
+        }
+        button{
+            font-family: 'Raleway', sans-serif;
+            color: #4a536b;
+        }
+    </style>
+    <script>
+        function submit(){
+            urlInput = document.getElementById('url-input')
+            uploadInput = document.getElementById('upload-input')
+            button = document.getElementById('submit-button')
+            error = document.getElementById('error-text')
+            error.style.display = "none"
+            if(urlInput.value.length == 0 && uploadInput.value.length == 0){
+                console.log("error")
+                error.style.display = "block"
+            }
+            else if(urlInput.value.length > 0 && uploadInput.value.length > 0){
+                error.style.display = "block"
+            }
+            else if(urlInput.value.length > 0){
+                
+            }
+            else{
+
+            }
+        }
+    </script>
+    <title>Document</title>
+</head>
+<body>
+    <div id = "header-container">
+        <h1 id = "header-text">SkinKare</h1>
+    </div>
+    <div id = "body-container">
+        <h1 id = "url-input-label">Enter a URL</h1>
+        <input type="text" placeholder="https://" id = "url-input" name = "url-input">
+        <h1 id = "upload-image-text">Or upload an image</h1>
+        <div id="upload-container">
+            <input type="file" id="upload-input" accept="image/*" onchange="loadImage(event)">
+            <button id="submit-button" onclick="submit()" >Submit</button>
+            <h1 id="error-text">Error: Make sure exactly one of the two methods is selected.</h1>
+        </div>
+        <img id="image" width = "200">
+    </div>
+</body>
+</html>
