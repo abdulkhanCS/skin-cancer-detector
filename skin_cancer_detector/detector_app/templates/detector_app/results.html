@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Mate+SC&family=Raleway:wght@100&display=swap" rel="stylesheet">
+    <style>
+        #header-container{
+            width: 100%;
+            height: 15%;
+            background-color: #4a536b;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+    }
+        #header-text{
+            color: white;
+            font-size: 4.5rem;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        #body-container{
+            width: 100%;
+            height: 85%;
+            background-color: whitesmoke;
+            position: absolute;
+            top: 15%;
+            left: 0%;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-items: center;
+    }
+        #image{
+            width: auto;
+            height: 60%;
+            position: absolute;
+            top: 2%;
+        }
+        #image-error-text{
+            position: absolute;
+            top: 0%;
+            font-size: 2rem;
+            display: none;
+            text-align: center;
+        }
+        h1{
+            font-family: 'Raleway', sans-serif;
+            color: #4a536b;
+        }
+        input{
+            font-family: 'Raleway', sans-serif;
+            color: #4a536b;
+        }
+        label{
+            font-family: 'Raleway', sans-serif;
+            color: #4a536b;
+        }
+        button{
+            font-family: 'Raleway', sans-serif;
+            color: #4a536b;
+        }
+    </style>
+    <script>
+        function imageFailedToLoad(){
+            var error = document.getElementById("image-error-text")
+            var image = document.getElementById("image")
+            //Show error message
+            error.style.display = "block"
+        }
+
+        function loadImage(event) {
+            //Render image from entered path if user uploaded an image
+            var url = window.location + ''
+            const imageUrl = url.split("/")[3]
+            console.log(imageUrl)
+            image.src = imageUrl
+            }
+
+    </script>
+    <title>Document</title>
+</head>
+<body onload="loadImage">
+    <div id = "header-container">
+        <h1 id = "header-text">SkinKare</h1>
+    </div>
+    <div id = "body-container">
+        <img src = "{{image_url}}" id="image" onerror="imageFailedToLoad()">
+        <h1 id="image-error-text">Error: The URL entered was not valid. Please reload and try again.</h1>
+    </div>
+</body>
+</html>
