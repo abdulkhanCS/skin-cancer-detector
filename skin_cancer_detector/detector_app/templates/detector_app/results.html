@@ -38,7 +38,7 @@
     }
         #image{
             width: auto;
-            height: 60%;
+            height: 40%;
             position: absolute;
             top: 2%;
         }
@@ -49,9 +49,26 @@
             display: none;
             text-align: center;
         }
-        h1{
+        #prediction-text{
+            position: absolute;
+            top: 40%;
+            font-size: 3rem;
+            text-align: center;
+        }
+        #learn-more{
+            overflow-y: scroll;
+            width: 90%;
+            height: 35%;
+            position: relative;
+            top: 55%;
+            font-size: 1.5rem;
+        }
+        h1 {
             font-family: 'Raleway', sans-serif;
             color: #4a536b;
+        }
+        h3 {
+            font-family: 'Raleway', sans-serif;
         }
         input{
             font-family: 'Raleway', sans-serif;
@@ -67,31 +84,53 @@
         }
     </style>
     <script>
+
+        function loadImage() {
+            let learnMore = document.getElementById('learn-more')
+            if("{{image_prediction}}" == "Actinic Keratosis"){
+                learnMore.innerHTML = "LEARN MORE ABOUT ACTINIC KERATOSIS. Actinic keratosis (AK), sometimes called solar keratosis or senile keratosis,[1][2] is a pre-cancerous[3] area of thick, scaly, or crusty skin.[4][5] Actinic keratosis is a disorder (-osis) of epidermal keratinocytes that is induced by ultraviolet (UV) light exposure (actin-).[6] These growths are more common in fair-skinned people and those who are frequently in the sun.[7] They are believed to form when skin gets damaged by UV radiation from the sun or indoor tanning beds, usually over the course of decades. Given their pre-cancerous nature, if left untreated, they may turn into a type of skin cancer called squamous cell carcinoma.[5] Untreated lesions have up to a 20% risk of progression to squamous cell carcinoma,[8] so treatment by a dermatologist is recommended. Actinic keratoses characteristically appear as thick, scaly, or crusty areas that often feel dry or rough. Size commonly ranges between 2 and 6 millimeters, but they can grow to be several centimeters in diameter. Notably, AKs are often felt before they are seen, and the texture is sometimes compared to sandpaper.[9] They may be dark, light, tan, pink, red, a combination of all these, or have the same color as the surrounding skin. Given the causal relationship between sun exposure and AK growth, they often appear on a background of sun-damaged skin and in areas that are commonly sun-exposed, such as the face, ears, neck, scalp, chest, backs of hands, forearms, or lips. Because sun exposure is rarely limited to a small area, most people who have an AK have more than one.[10] If clinical examination findings are not typical of AK and the possibility of in situ or invasive squamous cell carcinoma (SCC) cannot be excluded based on clinical examination alone, a biopsy or excision can be considered for definitive diagnosis by histologic examination of the lesional tissue.[11] Multiple treatment options for AK are available. Photodynamic therapy (PDT) is one option the treatment of numerous AK lesions in a region of the skin, termed field cancerization.[12] It involves the application of a photosensitizer to the skin followed by illumination with a strong light source. Topical creams, such as 5-fluorouracil or imiquimod, may require daily application to affected skin areas over a typical time course of weeks.[13] Cryotherapy is frequently used for few and well-defined lesions,[14] but undesired skin lightening, or hypopigmentation, may occur at the treatment site.[15] By following up with a dermatologist, AKs can be treated before they progress to skin cancer. If cancer does develop from an AK lesion, it can be caught early with close monitoring, at a time when treatment is likely to have a high cure rate. SOURCE: WIKIPEDIA"
+            }
+            else if("{{image_prediction}}" == "Benign Keratosis"){
+                learnMore.innerHTML = "LEARN MORE ABOUT BENIGN KERATOSIS. A seborrheic keratosis is a non-cancerous (benign) skin tumour that originates from cells in the outer layer of the skin. Like liver spots, seborrheic keratoses are seen more often as people age. The tumours (also called lesions) appear in various colours, from light tan to black. They are round or oval, feel flat or slightly elevated, like the scab from a healing wound, and range in size from very small to more than 2.5 centimetres (1 in) across.[5] They can often come in association with other skin conditions, including basal cell carcinoma.[6] Rarely seborrheic keratosis and basal cell carcinoma occur at the same location. At clinical examination the differential diagnosis includes warts[4] and melanoma. Because only the top layers of the epidermis are involved, seborrheic keratoses are often described as having a pasted on appearance. Some dermatologists refer to seborrheic keratoses as seborrheic warts, because they resemble warts, but strictly speaking the term warts refers to lesions that are caused by human papillomavirus.[7] SOURCE: WIKIPEDIA"
+            }
+            else if("{{image_prediction}}" == "Dermatofibroma"){
+                learnMore.innerHTML = "LEARN MORE ABOUT DERMATOFIBROMA. A dermatofibroma, or benign fibrous histiocytomas, is a benign skin growth. Dermatofibromas[4] are hard solitary slow-growing papules (rounded bumps) that may appear in a variety of colours, usually brownish to tan; they are often elevated or pedunculated. A dermatofibroma is associated with the dimple sign; by applying lateral pressure, there is a central depression of the dermatofibroma. Although typical dermatofibromas cause little or no discomfort, itching and tenderness can occur. Dermatofibromas can be found anywhere on the body, but most often they are found on the legs and arms.[5] They occur most often in women; the male to female ratio is about 1:4.[6] The age group in which they most commonly occur is 20 to 45 years. Some physicians and researchers believe dermatofibromas form as a reaction to previous injuries such as insect bites or thorn pricks.[6] They are composed of disordered collagen laid down by fibroblasts. Dermatofibromas are classed as benign skin lesions, meaning they are completely harmless, though they may be confused with a variety of subcutaneous tumours.[7] Deep penetrating dermatofibromas may be difficult to distinguish, even histologically, from rare malignant fibrohistocytic tumours like dermatofibrosarcoma protuberans.[8] Dermatofibromas typically have a positive buttonhole sign, or central dimpling in the center.[9] SOURCE: WIKIPEDIA"
+            }
+            else if("{{image_prediction}}" == "Melanocytic Nevus"){
+                learnMore.innerHTML = "LEARN MORE ABOUT MELANOCYTIC NEVUS. A melanocytic nevus (also known as nevocytic nevus, nevus-cell nevus and commonly as a mole)[1][2] is a type of melanocytic tumor that contains nevus cells.[2] Some sources equate the term mole with melanocytic nevus,[2] but there are also sources that equate the term mole with any nevus form.[3] The majority of moles appear during the first two decades of a person's life, with about one in every 100 babies being born with moles.[4] Acquired moles are a form of benign neoplasm, while congenital moles, or congenital nevi, are considered a minor malformation or hamartoma and may be at a higher risk for melanoma.[4] A mole can be either subdermal (under the skin) or a pigmented growth on the skin, formed mostly of a type of cell known as a melanocyte. The high concentration of the body's pigmenting agent, melanin, is responsible for their dark color. Moles are a member of the family of skin lesions known as nevi and can occur in all mammalian species, but have been documented most extensively in humans, dogs, and horses.[5] SOURCE: WIKIPEDIA"
+            }
+            else if("{{image_prediction}}" == "Melanoma"){
+                learnMore.innerHTML = "LEARN MORE ABOUT MELANOMA. Melanoma, also redundantly known as malignant melanoma,[7][8][9] is a type of skin cancer that develops from the pigment-producing cells known as melanocytes.[1] Melanomas typically occur in the skin but may rarely occur in the mouth, intestines or eye (uveal melanoma).[1][2] In women, they most commonly occur on the legs, while in men they most commonly occur on the back.[2] About 25% of melanomas develop from moles.[2] Changes in a mole that can indicate melanoma include an increase in size, irregular edges, change in color, itchiness or skin breakdown.[1] The primary cause of melanoma is ultraviolet light (UV) exposure in those with low levels of the skin pigment melanin.[2][10] The UV light may be from the sun or other sources, such as tanning devices.[2] Those with many moles, a history of affected family members and poor immune function are at greater risk.[1] A number of rare genetic conditions such as xeroderma pigmentosum also increase the risk.[11] Diagnosis is by biopsy and analysis of any skin lesion that has signs of being potentially cancerous.[1] Using sunscreen and avoiding UV light may prevent melanoma.[2] Treatment is typically removal by surgery.[1] In those with slightly larger cancers, nearby lymph nodes may be tested for spread (metastasis).[1] Most people are cured if spread has not occurred.[1] For those in whom melanoma has spread, immunotherapy, biologic therapy, radiation therapy or chemotherapy may improve survival.[1][12] With treatment, the five-year survival rates in the United States are 99% among those with localized disease, 65% when the disease has spread to lymph nodes and 25% among those with distant spread.[4] The likelihood that melanoma will reoccur or spread depends on its thickness, how fast the cells are dividing and whether or not the overlying skin has broken down.[2] Melanoma is the most dangerous type of skin cancer.[2] Globally, in 2012, it newly occurred in 232,000 people.[2] In 2015, there were 3.1 million people with active disease, which resulted in 59,800 deaths.[5][6] Australia and New Zealand have the highest rates of melanoma in the world.[2] There are also high rates in Northern Europe and North America, while it is less common in Asia, Africa and Latin America.[2] In the United States melanoma occurs about 1.6 times more often in men than women.[13] Melanoma has become more common since the 1960s in areas mostly populated by people of European descent.[2][11] SOURCE: WIKIPEDIA"
+            }   
+            else if("{{image_prediction}}" == "Squamous Cell Carcinoma"){
+                learnMore.innerHTML = "LEARN MORE ABOUT SQUAMOUS CELL CARCINOMA. Squamous cell carcinomas (SCCs), also known as epidermoid carcinomas, comprise a number of different types of cancer that result from squamous cells.[1] These cells form on the surface of the skin, on the lining of hollow organs in the body, and on the lining of the respiratory and digestive tracts.[1] Medical history, physical examination and medical imaging may suggest a squamous cell carcinoma, but a biopsy for histopathology generally establishes the diagnosis. TP63 staining is the main histological marker for Squamous cell carcinoma. In addition, TP63 is an essential transcription factor to establish squamous cell identity.[9] Squamous Cell Carcinoma, well differentiated, left upper paraspinal back marked for biopsy with adjacent actinic keratosis Classification: Cancer can be considered a very large and exceptionally heterogeneous family of malignant diseases, with squamous cell carcinomas comprising one of the largest subsets.[10][11][12] All SCC lesions are thought to begin via the repeated, uncontrolled division of cancer stem cells of epithelial lineage or characteristics.[citation needed] SCCs arise from squamous cells, which are flat cells that line many areas of the body. Accumulation of these cancer cells causes a microscopic focus of abnormal cells that are, at least initially, locally confined within the specific tissue in which the progenitor cell resided. This condition is called squamous cell carcinoma in situ, and it is diagnosed when the tumor has not yet penetrated the basement membrane or other delimiting structure to invade adjacent tissues. Once the lesion has grown and progressed to the point where it has breached, penetrated, and infiltrated adjacent structures, it is referred to as invasive squamous cell carcinoma. Once a carcinoma becomes invasive, it is able to spread to other organs and cause the formation of a metastasis, or secondary tumor. SOURCE: WIKIPEDIA"
+            }    
+            else if("{{image_prediction}}" == "Vascular Lesion"){
+                learnMore.innerHTML = "LEARN MORE ABOUT VASCULAR LESION. A vascular tumor is a tumor of vascular origin; a soft tissue growth that can be either benign or malignant, formed from blood vessels or lymph vessels.[1] Examples of vascular tumors include hemangiomas, lymphangiomas, hemangioendotheliomas, Kaposi's sarcomas, angiosarcomas, and hemangioblastomas. An angioma refers to any type of benign vascular tumor.[2] Some vascular tumors can be associated with serious blood-clotting disorders, making correct diagnosis critical.[3] A vascular tumor may be described in terms of being highly vascularized, or poorly vascularized, referring to the degree of blood supply to the tumor. Vascular tumors make up one of the classifications of vascular anomalies. The other grouping is vascular malformations. Vascular tumors can be further subclassified as being benign, borderline or aggressive, and malignant. Vascular tumors are described as proliferative, and vascular malformations as nonproliferative.[4] SOURCE: WIKIPEDIA"
+            }
+
+        }
+
         function imageFailedToLoad(){
+            console.log("HELLO")
             var error = document.getElementById("image-error-text")
             var image = document.getElementById("image")
             //Show error message
             error.style.display = "block"
         }
 
-        function loadImage(event) {
-            //Render image from entered path if user uploaded an image
-            var url = window.location + ''
-            const imageUrl = url.split("/")[3]
-            console.log(imageUrl)
-            image.src = imageUrl
-            }
-
     </script>
     <title>Document</title>
 </head>
-<body onload="loadImage">
+<body onload="loadImage()">
     <div id = "header-container">
         <h1 id = "header-text">SkinKare</h1>
     </div>
     <div id = "body-container">
         <img src = "{{image_url}}" id="image" onerror="imageFailedToLoad()">
         <h1 id="image-error-text">Error: The URL entered was not valid. Please reload and try again.</h1>
+        <h1 id="prediction-text">This image is {{image_prediction}}</h1>
+        <h3 id = "learn-more"></h3>
     </div>
 </body>
 </html>

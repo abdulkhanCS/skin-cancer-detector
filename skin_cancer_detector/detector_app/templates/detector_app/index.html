@@ -93,6 +93,13 @@
             font-size: 1.5rem;
             display: none;
         }
+        #image-error-text{
+            position: absolute;
+            top: 20%;
+            font-size: 1.5rem;
+            display: none;
+            text-align: center;
+        }
         h1{
             font-family: 'Raleway', sans-serif;
             color: #4a536b;
@@ -113,6 +120,27 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         
+        async function validateUrl(){
+            var urlInput = document.getElementById('url-input')            
+            var button = document.getElementById('submit-button') 
+            var urlError = document.getElementById('image-error-text')
+            var extension = urlInput.value.substring(urlInput.value.length - 3, urlInput.value.length)
+            console.log(extension)
+            const res = await fetch(urlInput.value);
+            const buff = await res.blob();
+            if(buff.type.startsWith('image/')){
+                button.disabled = false
+                urlError.style.display = "none"
+            }
+            else{
+                button.disabled = true
+                urlError.style.display = "block"
+            }
+            if(urlInput.value.length == 0){
+                urlError.style.display = "none"
+            }
+        }
+
         var uploadPath = ""
         function imageUploaded(event){
             uploadPath = event.target.files[0]
@@ -144,7 +172,7 @@
 
                 axios({
                     method:'POST',
-                    url:'/post/',
+                    url:'/results/',
                     headers:{
                         'X-CSRFToken': "{{csrf_token}}",
                         'Accept': 'application/json',
@@ -177,12 +205,13 @@
     <form action="results/" method="post" id="body-container">
         {% csrf_token %}
         <h1 id = "url-input-label">Enter a URL</h1>
-        <input type="text" placeholder="https://" id = "url-input" name = "url-input">
+        <input type="text" placeholder="https://" id = "url-input" name = "url-input" onchange = "validateUrl()">
         <h1 id = "upload-image-text">Or upload an image</h1>
         <div id="upload-container">
             <input type="file" id="upload-input" accept="image/*" onchange="imageUploaded(event)">
-            <button id="submit-button" type="submit" onclick="submit()" >Submit</button>
+            <button id="submit-button" type="submit" onclick="submit()" disabled>Submit</button>
             <h1 id="error-text">Error: Make sure exactly one of the two methods is selected.</h1>
+            <h1 id="image-error-text">Error: The URL entered was not valid. Please enter an image URL.</h1>
         </div>
     </form>
 </body>

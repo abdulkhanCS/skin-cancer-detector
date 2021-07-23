@@ -19,14 +19,62 @@ def results(request):
     context = {}
     if request.method == 'POST':
         image_url = request.POST.get("url-input")
-        #Feed the keras model the url of the image
-        feedModel(image_url)
         context["image_url"] = image_url
+        #Feed the keras model the url of the image
+        prediction = feedModel(image_url)
+        context["image_prediction"] = prediction.replace("_", " ")
     #Render results page with context
     return render(request,'detector_app/results.html', context)
 
 #Machine learning model
 def feedModel(image_url):
+    class_names = ['Actinic_Keratosis', 'Basal_Cell_Carcinoma', 'Benign', 'Benign_Keratosis', 'Dermatofibroma',
+    'Melanocytic_Nevus', 'Melanoma', 'Squamous_Cell_Carcinoma', 'Vascular_Lesion']
+    img_height = 224
+    img_width = 224
+    #Create the CNN - Convolutional Neural Network
+    mobile = keras.applications.mobilenet.MobileNet()
+    x = mobile.layers[-6].output
+    x = layers.Dropout(0.25)(x)
+    predictions = layers.Dense(len(class_names), activation='softmax')(x)
+    model = keras.Model(inputs=mobile.input, outputs=predictions)
+
+    #Compiling the model
+    model.compile(optimizer='adam',loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False), metrics=['accuracy'])
+
+    #Configure checkpoint callback for saving trained model
+    checkpoint_path = "trained_weights/cp.ckpt"
+
+    #Load the trained model
+    model.load_weights(checkpoint_path)
+
+    #Feed the target url to the trained model
+    predict_url = image_url
+    predict_path = tf.keras.utils.get_file(image_url[-10:], origin=predict_url)
+
+    #Preprocess the image before the model predicts on it
+    img = keras.preprocessing.image.load_img(
+        predict_path, target_size=(img_height, img_width)
+    )
+    img_array = keras.preprocessing.image.img_to_array(img)
+    #Create a batch
+    img_array = tf.expand_dims(img_array, 0)
+
+    #Output
+    predictions = model.predict(img_array)
+    score = tf.nn.softmax(predictions[0])
+
+    predicted_class = class_names[np.argmax(score)]
+    prediction_confidence = 100 * np.max(score)
+
+    print(
+        "This image most likely belongs to {} with a {:.2f} percent confidence."
+        .format(predicted_class, prediction_confidence)
+    )
+
+    return predicted_class
+
+def trainModel():
     #Setup data path directory
     data_dir = pathlib.Path('../ISIC_2019_Training_Input')
 
@@ -85,42 +133,17 @@ def feedModel(image_url):
     checkpoint_path = "trained_weights/cp.ckpt"
     cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path, save_weights_only=True, verbose=1)
 
-    #Load the trained model
-    model.load_weights(checkpoint_path)
-
     #Train the model
     epochs=100  #Rounds of training/testing 
-    # history = model.fit(
-    # train_ds,
-    # validation_data=test_ds,
-    # epochs=epochs,
-    # callbacks=[cp_callback],
-    # class_weight = class_weights
-    # )
-
-    #Feed the target url to the trained model
-    predict_url = image_url
-    predict_path = tf.keras.utils.get_file(image_url[-10:], origin=predict_url)
-
-    #Preprocess the image before the model predicts on it
-    img = keras.preprocessing.image.load_img(
-        predict_path, target_size=(img_height, img_width)
+    history = model.fit(
+    train_ds,
+    validation_data=test_ds,
+    epochs=epochs,
+    callbacks=[cp_callback],
+    class_weight = class_weights
     )
-    img_array = keras.preprocessing.image.img_to_array(img)
-    #Create a batch
-    img_array = tf.expand_dims(img_array, 0)
 
-    #Output
-    predictions = model.predict(img_array)
-    score = tf.nn.softmax(predictions[0])
 
-    predicted_class = class_names[np.argmax(score)]
-    prediction_confidence = 100 * np.max(score)
-
-    print(
-        "This image most likely belongs to {} with a {:.2f} percent confidence."
-        .format(predicted_class, prediction_confidence)
-    )
 
 
   
